@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\OptionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PropertyController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\HomeController;
 
@@ -25,10 +26,16 @@ Route::get('/biens/{slug}-{property}', [PropertiesController::class, 'show'])->n
     'property' => $idRegex,
     'slug' => $slugRegex
 ]);
+
 Route::post('/biens/{property}/contact',[PropertiesController::class, 'contact'])->name('property.contact')->where([
     'property' => $idRegex
 ]);
-Route::prefix('admin')->name('admin.')->group(function(){
+
+Route::get('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');
+Route::post('/login', [AuthController::class, 'DoLogin']);
+Route::delete('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function(){
     Route::resource('property', PropertyController::class)->except(['show']);
     Route::resource('option', OptionController::class)->except(['show']);
 });
