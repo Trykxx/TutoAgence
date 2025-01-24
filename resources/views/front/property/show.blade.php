@@ -16,23 +16,37 @@
         <div class="mt-4">
             <h4>Intéressé par ce bien ?</h4>
 
-            <form action="" method="post" class="vstack gap-3">
+            @include('shared.flash')
+
+            <form action="{{ route('property.contact', $property) }}" method="post" class="vstack gap-3">
                 @csrf
                 <div class="row">
-                    @include('shared.input', ['class' => 'col', 'name' => 'lastName', 'label' => 'Nom'])
                     @include('shared.input', [
                         'class' => 'col',
-                        'name' => 'firstName',
+                        'name' => 'lastname',
+                        'label' => 'Nom',
+                        'value' => 'Doe',
+                    ])
+                    @include('shared.input', [
+                        'class' => 'col',
+                        'name' => 'firstname',
                         'label' => 'Prénom',
+                        'value' => 'John',
                     ])
                 </div>
                 <div class="row">
-                    @include('shared.input', ['class' => 'col', 'name' => 'phone', 'label' => 'Téléphone'])
+                    @include('shared.input', [
+                        'class' => 'col',
+                        'name' => 'phone',
+                        'label' => 'Téléphone',
+                        'value' => '06 00 00 00 00',
+                    ])
                     @include('shared.input', [
                         'type' => 'email',
                         'class' => 'col',
                         'name' => 'email',
                         'label' => 'Email',
+                        'value' => 'john@doepublic.fr',
                     ])
                 </div>
                 @include('shared.input', [
@@ -40,6 +54,7 @@
                     'class' => 'col',
                     'name' => 'message',
                     'label' => 'Votre message',
+                    'value' => 'Mon petit message',
                 ])
                 <button class="btn btn-primary">Nous contacter</button>
             </form>
@@ -53,25 +68,25 @@
                     <table class="table table-striped">
                         <tr>
                             <td>Surface habitable</td>
-                            <td>{{ $property->surface}}m²</td>
+                            <td>{{ $property->surface }}m²</td>
                         </tr>
                         <tr>
                             <td>Pièces</td>
-                            <td>{{ $property->rooms}}</td>
+                            <td>{{ $property->rooms }}</td>
                         </tr>
                         <tr>
                             <td>Chambres</td>
-                            <td>{{ $property->bedrooms}}</td>
+                            <td>{{ $property->bedrooms }}</td>
                         </tr>
                         <tr>
                             <td>Etage</td>
-                            <td>{{ $property->floor ?: 'Rez de chaussé'}}</td>
+                            <td>{{ $property->floor ?: 'Rez de chaussé' }}</td>
                         </tr>
                         <tr>
                             <td>Localisation</td>
                             <td>
-                                {{ $property->address}}<br/>
-                                {{ $property->city }} ({{ $property->postal_code}})
+                                {{ $property->address }}<br />
+                                {{ $property->city }} ({{ $property->postal_code }})
                             </td>
                         </tr>
                     </table>
